@@ -7,15 +7,19 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "web-dev-server --node-resolve --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "web-dev-server --config web-dev-server.config.mjs --watch",
+    "test": "web-test-runner"
   },
   "dependencies": {
     "@awesome.me/webawesome": "^3.0.0",
     "lit": "^3.3.1"
   },
   "devDependencies": {
+    "@open-wc/testing": "^4.0.0",
+    "@types/mocha": "^10.0.10",
     "@web/dev-server": "^0.4.6",
+    "@web/dev-server-esbuild": "^1.0.4",
+    "@web/test-runner": "^0.20.2",
     "typescript": "^5.9.3"
   }
 }

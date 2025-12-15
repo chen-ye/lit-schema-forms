@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lit Schema Form Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h1 { margin-bottom: 2rem; }
+    pre {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      max-height: 500px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Import Web Awesome -->
+  <link rel="stylesheet" href="/node_modules/@awesome.me/webawesome/dist/styles/webawesome.css">
+  <script type="module" src="./src/json-schema-form.ts"></script>
+</head>
+<body>
+  <header>
+    <h1>Lit Schema Form Demo</h1>
+    <div class="controls">
+      <label for="example-select">Load Example:</label>
+      <wa-select id="example-select"></wa-select>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div>
+      <h2>Form</h2>
+      <wa-json-schema-form id="form"></wa-json-schema-form>
+    </div>
+    <div>
+      <h2>Data</h2>
+      <pre id="output"></pre>
+      <h2>Schema</h2>
+      <pre id="schema-display"></pre>
+    </div>
+  </div>
+
+  <script type="module">
+    import '@awesome.me/webawesome/dist/components/button/button.js';
+    import '@awesome.me/webawesome/dist/components/select/select.js';
+    import '@awesome.me/webawesome/dist/components/option/option.js';
+
+    const form = document.getElementById('form');
+    const output = document.getElementById('output');
+    const schemaDisplay = document.getElementById('schema-display');
+    const select = document.getElementById('example-select');
+
+    async function loadManifest() {
+      const response = await fetch('./testdata/manifest.json');
+      const examples = await response.json();
+
+      examples.forEach(name => {
+        const option = document.createElement('wa-option');
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+      });
+
+      // Load initial example
+      if (examples.length > 0) {
+        select.value = 'simple'; // Default preference
+        loadExample('simple');
+      }
+    }
+
+    async function loadExample(name) {
+      if (!name) return;
+      try {
+        const [model, view, data] = await Promise.all([
+          fetch(`./testdata/${name}/model.json`).then(r => r.json()),
+          fetch(`./testdata/${name}/view.json`).then(r => r.ok ? r.json() : {}),
+          fetch(`./testdata/${name}/data.json`).then(r => r.ok ? r.json() : {})
+        ]);
+
+        form.schema = model;
+        form.view = view || {};
+        form.data = data || {};
+
+        output.textContent = JSON.stringify(data || {}, null, 2);
+        schemaDisplay.textContent = JSON.stringify(model || {}, null, 2);
+
+      } catch (e) {
+        console.error('Failed to load example:', e);
+        output.textContent = 'Error loading example: ' + e.message;
+      }
+    }
+
+    select.addEventListener('input', (e) => {
+       loadExample(e.target.value);
+    });
+
+    form.addEventListener('lsf-change', (e) => {
+      output.textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    loadManifest();
+  </script>
+</body>
+</html>
