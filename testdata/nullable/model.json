@@ -1,6 +1,6 @@
 {
-  "title": "A registration form",
-  "description": "A simple form example.",
+  "title": "A registration form (nullable)",
+  "description": "A simple form example using nullable types",
   "type": "object",
   "required": [
     "firstName",
@@ -17,11 +17,17 @@
       "title": "Last name"
     },
     "age": {
-      "type": "integer",
+      "type": [
+        "integer",
+        "null"
+      ],
       "title": "Age"
     },
     "bio": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "title": "Bio"
     },
     "password": {

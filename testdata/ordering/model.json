@@ -1,38 +1,30 @@
 {
   "title": "A registration form",
-  "description": "A simple form example.",
   "type": "object",
   "required": [
     "firstName",
     "lastName"
   ],
   "properties": {
-    "firstName": {
+    "password": {
       "type": "string",
-      "title": "First name",
-      "default": "Chuck"
+      "title": "Password"
     },
     "lastName": {
       "type": "string",
       "title": "Last name"
     },
-    "age": {
-      "type": "integer",
-      "title": "Age"
-    },
     "bio": {
       "type": "string",
       "title": "Bio"
     },
-    "password": {
+    "firstName": {
       "type": "string",
-      "title": "Password",
-      "minLength": 3
+      "title": "First name"
     },
-    "telephone": {
-      "type": "string",
-      "title": "Telephone",
-      "minLength": 10
+    "age": {
+      "type": "integer",
+      "title": "Age"
     }
   }
 }
