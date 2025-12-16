@@ -2,10 +2,7 @@
   "type": "object",
   "properties": {
     "animal": {
-      "enum": [
-        "Cat",
-        "Fish"
-      ]
+      "enum": ["Cat", "Fish"]
     }
   },
   "allOf": [
@@ -21,16 +18,10 @@
         "properties": {
           "food": {
             "type": "string",
-            "enum": [
-              "meat",
-              "grass",
-              "fish"
-            ]
+            "enum": ["meat", "grass", "fish"]
           }
         },
-        "required": [
-          "food"
-        ]
+        "required": ["food"]
       }
     },
     {
@@ -45,29 +36,18 @@
         "properties": {
           "food": {
             "type": "string",
-            "enum": [
-              "insect",
-              "worms"
-            ]
+            "enum": ["insect", "worms"]
           },
           "water": {
             "type": "string",
-            "enum": [
-              "lake",
-              "sea"
-            ]
+            "enum": ["lake", "sea"]
           }
         },
-        "required": [
-          "food",
-          "water"
-        ]
+        "required": ["food", "water"]
       }
     },
     {
-      "required": [
-        "animal"
-      ]
+      "required": ["animal"]
     }
   ]
 }

@@ -2,9 +2,7 @@
   "title": "Null field example",
   "description": "A short form with a null field",
   "type": "object",
-  "required": [
-    "firstName"
-  ],
+  "required": ["firstName"],
   "properties": {
     "helpText": {
       "title": "A null field",

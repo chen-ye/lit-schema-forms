@@ -1,14 +1,9 @@
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { renderField } from './index.js';
 import '@awesome.me/webawesome/dist/components/button/button.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
 
-export function renderArrayField(
-  schema: any,
-  value: any[],
-  onChange: (val: any[]) => void,
-  view: any = {}
-) {
+export function renderArrayField(schema: any, value: any[], onChange: (val: any[]) => void, view: any = {}) {
   const items = value || [];
   const itemSchema = schema.items || {};
 
@@ -36,7 +31,8 @@ export function renderArrayField(
       </div>
 
       <div class="array-items" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
-        ${items.map((item, index) => html`
+        ${items.map(
+          (item, index): TemplateResult => html`
           <div class="array-item" style="display: flex; gap: 0.5rem; align-items: flex-start; border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px;">
             <div style="flex: 1;">
               ${renderField(
@@ -44,14 +40,15 @@ export function renderArrayField(
                 itemSchema,
                 item,
                 (_, val) => handleChange(index, val),
-                view.items || {} // Assuming view.items holds config for items
+                view.items || {}, // Assuming view.items holds config for items
               )}
             </div>
             <wa-button variant="danger" size="small" @click=${() => handleRemove(index)}>
                <wa-icon name="trash" label="Remove"></wa-icon>
             </wa-button>
           </div>
-        `)}
+        `,
+        )}
       </div>
     </div>
   `;

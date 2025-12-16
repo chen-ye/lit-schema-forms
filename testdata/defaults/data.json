@@ -11,9 +11,6 @@
     }
   },
   "noValuesInFormData": {
-    "array": [
-      {},
-      {}
-    ]
+    "array": [{}, {}]
   }
 }

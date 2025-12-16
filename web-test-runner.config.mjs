@@ -7,7 +7,7 @@ export default {
     esbuildPlugin({
       ts: true,
       target: 'es2022',
-      tsconfig: './tsconfig.json'
-    })
+      tsconfig: './tsconfig.json',
+    }),
   ],
 };

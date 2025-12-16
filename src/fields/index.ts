@@ -1,13 +1,13 @@
 import { html } from 'lit';
-import { renderStringField } from './StringField.js';
-import { renderBooleanField } from './BooleanField.js';
-import { renderSelectField } from './SelectField.js';
-import { renderObjectField } from './ObjectField.js';
-import { renderArrayField } from './ArrayField.js';
-import { renderNumberField } from './NumberField.js';
-import { renderCompositionField } from './CompositionField.js';
 import { mergeSchemas } from '../utils/schema-utils.js';
+import { renderArrayField } from './ArrayField.js';
+import { renderBooleanField } from './BooleanField.js';
+import { renderCompositionField } from './CompositionField.js';
 import { renderNullField } from './NullField.js';
+import { renderNumberField } from './NumberField.js';
+import { renderObjectField } from './ObjectField.js';
+import { renderSelectField } from './SelectField.js';
+import { renderStringField } from './StringField.js';
 import '@awesome.me/webawesome/dist/components/textarea/textarea.js';
 
 export function renderField(
@@ -15,14 +15,14 @@ export function renderField(
   schema: any,
   value: any,
   onChange: (key: string, val: any) => void,
-  view: any = {}
+  view: any = {},
 ) {
   const fieldView = view[key] || {};
 
   // Handle allOf (merge and render)
   if (schema.allOf) {
-     const merged = mergeSchemas(schema.allOf);
-     return renderField(key, merged, value, onChange, view);
+    const merged = mergeSchemas(schema.allOf);
+    return renderField(key, merged, value, onChange, view);
   }
 
   // Handle Composition (oneOf / anyOf)
@@ -38,11 +38,11 @@ export function renderField(
   // Handle specific types
   switch (schema.type) {
     case 'null':
-       return renderNullField(schema);
+      return renderNullField(schema);
 
     case 'string':
       if (fieldView['ui:widget'] === 'textarea') {
-         return html`
+        return html`
            <wa-textarea
              label=${schema.title || ''}
              value=${value || ''}

@@ -6,23 +6,17 @@
       "anyOf": [
         {
           "type": "string",
-          "enum": [
-            "#ff0000"
-          ],
+          "enum": ["#ff0000"],
           "title": "Red"
         },
         {
           "type": "string",
-          "enum": [
-            "#00ff00"
-          ],
+          "enum": ["#00ff00"],
           "title": "Green"
         },
         {
           "type": "string",
-          "enum": [
-            "#0000ff"
-          ],
+          "enum": ["#0000ff"],
           "title": "Blue"
         }
       ]
@@ -44,11 +38,7 @@
   },
   "title": "Image editor",
   "type": "object",
-  "required": [
-    "currentColor",
-    "colorMask",
-    "blendMode"
-  ],
+  "required": ["currentColor", "colorMask", "blendMode"],
   "properties": {
     "currentColor": {
       "$ref": "#/definitions/Color",

@@ -3,12 +3,7 @@ import { renderField } from './index.js';
 import '@awesome.me/webawesome/dist/components/select/select.js';
 import '@awesome.me/webawesome/dist/components/option/option.js';
 
-export function renderCompositionField(
-  schema: any,
-  value: any,
-  onChange: (val: any) => void,
-  view: any = {}
-) {
+export function renderCompositionField(schema: any, value: any, onChange: (val: any) => void, view: any = {}) {
   // Determine if it's oneOf or anyOf
   const options = schema.oneOf || schema.anyOf;
   if (!options || !Array.isArray(options)) {
@@ -54,12 +49,12 @@ export function renderCompositionField(
 
   // Let's try to infer from data if it exists.
   if (value !== undefined) {
-      const match = options.findIndex((opt: any) => {
-          if (opt.properties && typeof value === 'object') return true; // weak match
-          if (opt.type === typeof value) return true;
-          return false;
-      });
-      if (match >= 0) selectedIndex = match;
+    const match = options.findIndex((opt: any) => {
+      if (opt.properties && typeof value === 'object') return true; // weak match
+      if (opt.type === typeof value) return true;
+      return false;
+    });
+    if (match >= 0) selectedIndex = match;
   }
 
   // We allow the user to override via the dropdown.
@@ -89,7 +84,7 @@ export function renderCompositionField(
     // So: When switching, set data to default of new schema.
 
     const newSchema = options[newIndex];
-    let newData = undefined;
+    let newData: any;
     if (newSchema.properties) newData = {};
     if (newSchema.type === 'array') newData = [];
     if (newSchema.type === 'array') newData = [];
@@ -112,9 +107,11 @@ export function renderCompositionField(
             @input=${handleOptionChange} // Listen to standard input
             size="small"
         >
-          ${options.map((opt: any, i: number) => html`
+          ${options.map(
+            (opt: any, i: number) => html`
             <wa-option value=${String(i)}>${opt.title || `Option ${i + 1}`}</wa-option>
-          `)}
+          `,
+          )}
         </wa-select>
         <div style="font-size: 0.8em; color: #666; margin-top: 0.25rem;">
             ${schema.description || 'Select an option to configure.'}
@@ -122,11 +119,11 @@ export function renderCompositionField(
       </div>
 
       ${renderField(
-        'option-' + selectedIndex, // Dynamic key?
+        `option-${selectedIndex}`, // Dynamic key?
         currentSchema,
         value,
         onChange, // Pass through change handler
-        view // Pass view
+        view, // Pass view
       )}
     </div>
   `;

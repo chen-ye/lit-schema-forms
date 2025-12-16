@@ -25,12 +25,7 @@
       "title": "A multiple choices list",
       "items": {
         "type": "string",
-        "enum": [
-          "foo",
-          "bar",
-          "fuzz",
-          "qux"
-        ]
+        "enum": ["foo", "bar", "fuzz", "qux"]
       },
       "uniqueItems": true
     },
@@ -65,11 +60,7 @@
       "type": "array",
       "title": "List and item level defaults",
       "minItems": 5,
-      "default": [
-        "carp",
-        "trout",
-        "bream"
-      ],
+      "default": ["carp", "trout", "bream"],
       "items": {
         "type": "string",
         "default": "unidentified"

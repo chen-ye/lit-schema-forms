@@ -1,8 +1,6 @@
 {
   "blendMode": {
-    "ui:enumDisabled": [
-      "multiply"
-    ]
+    "ui:enumDisabled": ["multiply"]
   },
   "toggleMask": {
     "ui:widget": "radio"

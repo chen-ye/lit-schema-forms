@@ -2,10 +2,7 @@
   "title": "A registration form (nullable)",
   "description": "A simple form example using nullable types",
   "type": "object",
-  "required": [
-    "firstName",
-    "lastName"
-  ],
+  "required": ["firstName", "lastName"],
   "properties": {
     "firstName": {
       "type": "string",
@@ -17,17 +14,11 @@
       "title": "Last name"
     },
     "age": {
-      "type": [
-        "integer",
-        "null"
-      ],
+      "type": ["integer", "null"],
       "title": "Age"
     },
     "bio": {
-      "type": [
-        "string",
-        "null"
-      ],
+      "type": ["string", "null"],
       "title": "Bio"
     },
     "password": {

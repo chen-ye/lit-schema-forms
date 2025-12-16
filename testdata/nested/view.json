@@ -23,11 +23,7 @@
           "label": false
         }
       },
-      "ui:order": [
-        "title",
-        "details",
-        "done"
-      ]
+      "ui:order": ["title", "details", "done"]
     }
   }
 }

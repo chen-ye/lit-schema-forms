@@ -13,9 +13,11 @@ export function renderSelectField(schema: any, value: any, onChange: (val: any) 
       help-text=${view['ui:help'] || ''}
       @wa-change=${(e: any) => onChange(e.target.value)}
     >
-      ${options.map((opt: any) => html`
+      ${options.map(
+        (opt: any) => html`
         <wa-option value=${opt}>${opt}</wa-option>
-      `)}
+      `,
+      )}
     </wa-select>
   `;
 }

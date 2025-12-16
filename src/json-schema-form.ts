@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { renderField } from './fields/index.js';
 
@@ -29,16 +29,18 @@ export class JsonSchemaForm extends LitElement {
 
   private handleFieldChange(key: string, value: any) {
     if (key === '') {
-       this.data = value;
+      this.data = value;
     } else {
-       this.data = { ...this.data, [key]: value };
+      this.data = { ...this.data, [key]: value };
     }
 
-    this.dispatchEvent(new CustomEvent('lsf-change', {
-      detail: { data: this.data },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('lsf-change', {
+        detail: { data: this.data },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     this.requestUpdate();
   }
 
@@ -48,13 +50,7 @@ export class JsonSchemaForm extends LitElement {
     }
 
     // Treat the entire form as a single root field
-    return renderField(
-      '',
-      this.schema,
-      this.data,
-      (key, val) => this.handleFieldChange(key, val),
-      this.view || {}
-    );
+    return renderField('', this.schema, this.data, (key, val) => this.handleFieldChange(key, val), this.view || {});
   }
 }
 

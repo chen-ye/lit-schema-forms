@@ -1,9 +1,7 @@
 {
   "title": "A list of tasks",
   "type": "object",
-  "required": [
-    "title"
-  ],
+  "required": ["title"],
   "properties": {
     "title": {
       "type": "string",
@@ -14,9 +12,7 @@
       "title": "Tasks",
       "items": {
         "type": "object",
-        "required": [
-          "title"
-        ],
+        "required": ["title"],
         "properties": {
           "title": {
             "type": "string",

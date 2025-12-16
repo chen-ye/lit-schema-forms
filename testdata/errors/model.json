@@ -26,11 +26,7 @@
       "maxItems": 2,
       "items": {
         "type": "string",
-        "enum": [
-          "foo",
-          "bar",
-          "fuzz"
-        ]
+        "enum": ["foo", "bar", "fuzz"]
       }
     }
   }

@@ -1,6 +1,6 @@
-import { html, fixture, expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import '../src/json-schema-form.js';
-import { JsonSchemaForm } from '../src/json-schema-form.js';
+import type { JsonSchemaForm } from '../src/json-schema-form.js';
 
 describe('JsonSchemaForm', () => {
   it('renders simple fields', async () => {
@@ -8,8 +8,8 @@ describe('JsonSchemaForm', () => {
       type: 'object',
       properties: {
         firstName: { type: 'string', title: 'First Name' },
-        age: { type: 'integer', title: 'Age' }
-      }
+        age: { type: 'integer', title: 'Age' },
+      },
     };
     const data = { firstName: 'Alice', age: 30 };
 
@@ -17,7 +17,7 @@ describe('JsonSchemaForm', () => {
       <wa-json-schema-form .schema=${schema} .data=${data}></wa-json-schema-form>
     `);
 
-    const inputs = el.shadowRoot!.querySelectorAll('wa-input');
+    const inputs = el.shadowRoot?.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(2);
 
     const firstNameInput = inputs[0] as any;
@@ -31,14 +31,14 @@ describe('JsonSchemaForm', () => {
     const schema = {
       type: 'object',
       properties: {
-        agree: { type: 'boolean', title: 'Agree' }
-      }
+        agree: { type: 'boolean', title: 'Agree' },
+      },
     };
     const el = await fixture<JsonSchemaForm>(html`
       <wa-json-schema-form .schema=${schema}></wa-json-schema-form>
     `);
 
-    const checkbox = el.shadowRoot!.querySelector('wa-checkbox') as any;
+    const checkbox = el.shadowRoot?.querySelector('wa-checkbox') as any;
     expect(checkbox).to.exist;
     expect(checkbox.textContent).to.contain('Agree');
   });
@@ -47,17 +47,17 @@ describe('JsonSchemaForm', () => {
     const schema = {
       type: 'object',
       properties: {
-        enable: { type: 'boolean', title: 'Enable' }
-      }
+        enable: { type: 'boolean', title: 'Enable' },
+      },
     };
     const view = {
-      enable: { 'ui:widget': 'switch' }
+      enable: { 'ui:widget': 'switch' },
     };
     const el = await fixture<JsonSchemaForm>(html`
       <wa-json-schema-form .schema=${schema} .view=${view}></wa-json-schema-form>
     `);
 
-    const toggle = el.shadowRoot!.querySelector('wa-switch') as any;
+    const toggle = el.shadowRoot?.querySelector('wa-switch') as any;
     expect(toggle).to.exist;
     expect(toggle.textContent).to.contain('Enable');
   });
@@ -66,14 +66,14 @@ describe('JsonSchemaForm', () => {
     const schema = {
       type: 'object',
       properties: {
-        color: { type: 'string', title: 'Color', enum: ['Red', 'Blue'] }
-      }
+        color: { type: 'string', title: 'Color', enum: ['Red', 'Blue'] },
+      },
     };
     const el = await fixture<JsonSchemaForm>(html`
       <wa-json-schema-form .schema=${schema}></wa-json-schema-form>
     `);
 
-    const select = el.shadowRoot!.querySelector('wa-select') as any;
+    const select = el.shadowRoot?.querySelector('wa-select') as any;
     expect(select).to.exist;
     expect(select.label).to.equal('Color');
 
@@ -85,17 +85,17 @@ describe('JsonSchemaForm', () => {
     const schema = {
       type: 'object',
       properties: {
-        bio: { type: 'string', title: 'Bio' }
-      }
+        bio: { type: 'string', title: 'Bio' },
+      },
     };
     const view = {
-      bio: { 'ui:widget': 'textarea' }
+      bio: { 'ui:widget': 'textarea' },
     };
     const el = await fixture<JsonSchemaForm>(html`
       <wa-json-schema-form .schema=${schema} .view=${view}></wa-json-schema-form>
     `);
 
-    const textarea = el.shadowRoot!.querySelector('wa-textarea') as any;
+    const textarea = el.shadowRoot?.querySelector('wa-textarea') as any;
     expect(textarea).to.exist;
     expect(textarea.label).to.equal('Bio');
   });

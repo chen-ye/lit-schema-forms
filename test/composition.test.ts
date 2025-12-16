@@ -1,19 +1,19 @@
-import { html, fixture, expect, oneEvent } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import '../src/json-schema-form.js';
-import { JsonSchemaForm } from '../src/json-schema-form.js';
+import type { JsonSchemaForm } from '../src/json-schema-form.js';
 
 describe('Schema Composition', () => {
   it('renders allOf by merging schemas', async () => {
     const schema = {
       allOf: [
         { type: 'object', properties: { foo: { type: 'string', title: 'Foo' } } },
-        { type: 'object', properties: { bar: { type: 'number', title: 'Bar' } } }
-      ]
+        { type: 'object', properties: { bar: { type: 'number', title: 'Bar' } } },
+      ],
     };
     const el: JsonSchemaForm = await fixture(html`<wa-json-schema-form .schema=${schema}></wa-json-schema-form>`);
 
     // Should render inputs for both foo (string) and bar (number)
-    const inputs = el.shadowRoot!.querySelectorAll('wa-input');
+    const inputs = el.shadowRoot?.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(2);
     expect(inputs[0].label).to.equal('Foo');
     expect(inputs[1].label).to.equal('Bar');
@@ -23,23 +23,24 @@ describe('Schema Composition', () => {
     const schema = {
       oneOf: [
         { type: 'string', title: 'Option A' },
-        { type: 'number', title: 'Option B' }
-      ]
+        { type: 'number', title: 'Option B' },
+      ],
     };
     const el: JsonSchemaForm = await fixture(html`<wa-json-schema-form .schema=${schema}></wa-json-schema-form>`);
 
     // Check for selector
-    const select = el.shadowRoot!.querySelector('wa-select');
+    const select = el.shadowRoot?.querySelector('wa-select');
     expect(select).to.exist;
 
     // Default to first option (string)
-    const inputs = el.shadowRoot!.querySelectorAll('wa-input');
+    const inputs = el.shadowRoot?.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(1);
     expect(inputs[0].type).to.not.equal('number'); // wa-input default type is text
 
     // Switch to option 2
+    // biome-ignore lint/style/noNonNullAssertion: Test utility
     select!.value = '1';
-    select!.dispatchEvent(new CustomEvent('input', { bubbles: true })); // CompositionField listens to input
+    select?.dispatchEvent(new CustomEvent('input', { bubbles: true })); // CompositionField listens to input
 
     await el.updateComplete;
     // Wait for internal re-render or event based update?
@@ -51,17 +52,17 @@ describe('Schema Composition', () => {
 
     // Verify input type changed to number
     // Note: Render might take a tick.
-    await new Promise(r => setTimeout(r, 0)); // tick
+    await new Promise((r) => setTimeout(r, 0)); // tick
 
-    const input = el.shadowRoot!.querySelector('wa-input');
-    expect(input!.type).to.equal('number');
+    const input = el.shadowRoot?.querySelector('wa-input');
+    expect(input?.type).to.equal('number');
   });
 
   it('renders null field', async () => {
-      const schema = { type: 'null', title: 'Nothing here' };
-      const el: JsonSchemaForm = await fixture(html`<wa-json-schema-form .schema=${schema}></wa-json-schema-form>`);
-      const div = el.shadowRoot!.querySelector('.null-field');
-      expect(div).to.exist;
-      expect(div!.textContent).to.contain('Nothing here');
+    const schema = { type: 'null', title: 'Nothing here' };
+    const el: JsonSchemaForm = await fixture(html`<wa-json-schema-form .schema=${schema}></wa-json-schema-form>`);
+    const div = el.shadowRoot?.querySelector('.null-field');
+    expect(div).to.exist;
+    expect(div?.textContent).to.contain('Nothing here');
   });
 });

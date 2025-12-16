@@ -42,10 +42,7 @@
           }
         }
       },
-      "required": [
-        "deepObject",
-        "deepArray"
-      ]
+      "required": ["deepObject", "deepArray"]
     },
     "nestedArrayOptional": {
       "type": "array",
@@ -145,8 +142,5 @@
       ]
     }
   },
-  "required": [
-    "nestedObject",
-    "nestedArray"
-  ]
+  "required": ["nestedObject", "nestedArray"]
 }

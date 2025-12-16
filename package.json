@@ -8,13 +8,16 @@
   "main": "index.js",
   "scripts": {
     "start": "web-dev-server --config web-dev-server.config.mjs --watch",
-    "test": "web-test-runner"
+    "test": "web-test-runner",
+    "check": "biome check .",
+    "lint": "biome check --write ."
   },
   "dependencies": {
     "@awesome.me/webawesome": "^3.0.0",
     "lit": "^3.3.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.9",
     "@open-wc/testing": "^4.0.0",
     "@types/mocha": "^10.0.10",
     "@web/dev-server": "^0.4.6",

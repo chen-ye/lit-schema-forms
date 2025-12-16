@@ -1,15 +1,10 @@
 {
   "ui:globalOptions": {
-    "enableOptionalDataFieldForType": [
-      "object",
-      "array"
-    ]
+    "enableOptionalDataFieldForType": ["object", "array"]
   },
   "nestedObjectOptional": {
     "deepArrayOptional": {
-      "ui:enableOptionalDataFieldForType": [
-        "object"
-      ]
+      "ui:enableOptionalDataFieldForType": ["object"]
     }
   }
 }

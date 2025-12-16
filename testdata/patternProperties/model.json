@@ -2,10 +2,7 @@
   "title": "A customizable registration form",
   "description": "A simple form with pattern properties example.",
   "type": "object",
-  "required": [
-    "firstName",
-    "lastName"
-  ],
+  "required": ["firstName", "lastName"],
   "properties": {
     "firstName": {
       "type": "string",

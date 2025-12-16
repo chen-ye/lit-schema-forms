@@ -13,11 +13,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "street_address",
-        "city",
-        "state"
-      ]
+      "required": ["street_address", "city", "state"]
     },
     "node": {
       "type": "object",

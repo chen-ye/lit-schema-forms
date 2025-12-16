@@ -1,6 +1,6 @@
-import { html, fixture, expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import '../src/json-schema-form.js';
-import { JsonSchemaForm } from '../src/json-schema-form.js';
+import type { JsonSchemaForm } from '../src/json-schema-form.js';
 
 describe('Examples Verification', () => {
   let examples: string[] = [];
@@ -10,23 +10,26 @@ describe('Examples Verification', () => {
     // Note: web-test-runner serves the root of the project
     const response = await fetch('/testdata/manifest.json');
     if (!response.ok) {
-        throw new Error('Failed to fetch manifest.json');
+      throw new Error('Failed to fetch manifest.json');
     }
     examples = await response.json();
 
     // Filter out examples that use schema features we haven't implemented yet
     // (allOf, anyOf, oneOf, dependencies, references, etc.)
     const unsupported = [
-        'bundledSchema', 'ifThenElse',
-        'propertyDependencies', 'schemaDependencies', 'references',
-        'files', // File widgets not implemented
-        'examples', // Might rely on specific loading
-        'enumObjects', // Enum as object?
-        'options', // Options?
-        'single',
-        'additionalProperties' // Not handling additionalProps yet
+      'bundledSchema',
+      'ifThenElse',
+      'propertyDependencies',
+      'schemaDependencies',
+      'references',
+      'files', // File widgets not implemented
+      'examples', // Might rely on specific loading
+      'enumObjects', // Enum as object?
+      'options', // Options?
+      'single',
+      'additionalProperties', // Not handling additionalProps yet
     ];
-    examples = examples.filter(e => !unsupported.includes(e));
+    examples = examples.filter((e) => !unsupported.includes(e));
   });
 
   it('verifies all examples render without error', async () => {
@@ -44,19 +47,19 @@ describe('Examples Verification', () => {
     expect(examples.length).to.be.greaterThan(0);
 
     for (const name of examples) {
-        try {
-            const [modelRes, viewRes, dataRes] = await Promise.all([
-                fetch(`/testdata/${name}/model.json`),
-                fetch(`/testdata/${name}/view.json`),
-                fetch(`/testdata/${name}/data.json`)
-            ]);
+      try {
+        const [modelRes, viewRes, dataRes] = await Promise.all([
+          fetch(`/testdata/${name}/model.json`),
+          fetch(`/testdata/${name}/view.json`),
+          fetch(`/testdata/${name}/data.json`),
+        ]);
 
-            // Some files might not exist (e.g. view.json), handle correctly
-            const schema = await modelRes.json();
-            const view = viewRes.ok ? await viewRes.json() : {};
-            const data = dataRes.ok ? await dataRes.json() : {};
+        // Some files might not exist (e.g. view.json), handle correctly
+        const schema = await modelRes.json();
+        const view = viewRes.ok ? await viewRes.json() : {};
+        const data = dataRes.ok ? await dataRes.json() : {};
 
-            const el: JsonSchemaForm = await fixture(html`
+        const el: JsonSchemaForm = await fixture(html`
                 <wa-json-schema-form
                     .schema=${schema}
                     .view=${view}
@@ -64,22 +67,21 @@ describe('Examples Verification', () => {
                 ></wa-json-schema-form>
             `);
 
-            await el.updateComplete;
+        await el.updateComplete;
 
-            // Basic assertions
-            expect(el.shadowRoot).to.exist;
-            const form = el.shadowRoot!.querySelector('form');
-            expect(form).to.exist;
+        // Basic assertions
+        expect(el.shadowRoot).to.exist;
+        const form = el.shadowRoot?.querySelector('form');
+        expect(form).to.exist;
 
-            // Check that we don't have "Unknown type" errors generally,
-            // unless the schema actually has unknown types (some might).
-            // But mostly we want to ensure it produced *something*.
-            expect(form!.children.length).to.be.greaterThan(0, `Example '${name}' rendered empty form`);
-
-        } catch (e) {
-            console.error(`Example '${name}' failed:`, e);
-            throw new Error(`Example '${name}' failed to render: ${e.message}`);
-        }
+        // Check that we don't have "Unknown type" errors generally,
+        // unless the schema actually has unknown types (some might).
+        // But mostly we want to ensure it produced *something*.
+        expect(form?.children.length).to.be.greaterThan(0, `Example '${name}' rendered empty form`);
+      } catch (e) {
+        console.error(`Example '${name}' failed:`, e);
+        throw new Error(`Example '${name}' failed to render: ${e.message}`);
+      }
     }
   });
 });

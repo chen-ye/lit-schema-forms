@@ -1,10 +1,5 @@
 {
-  "ui:order": [
-    "firstName",
-    "lastName",
-    "*",
-    "password"
-  ],
+  "ui:order": ["firstName", "lastName", "*", "password"],
   "age": {
     "ui:widget": "updown"
   },

@@ -1,32 +1,16 @@
 {
   "location": {
-    "ui:enumNames": [
-      "New York",
-      "Amsterdam",
-      "Hong Kong"
-    ]
+    "ui:enumNames": ["New York", "Amsterdam", "Hong Kong"]
   },
   "locationRadio": {
     "ui:widget": "RadioWidget",
-    "ui:enumNames": [
-      "New York",
-      "Amsterdam",
-      "Hong Kong"
-    ]
+    "ui:enumNames": ["New York", "Amsterdam", "Hong Kong"]
   },
   "multiSelect": {
-    "ui:enumNames": [
-      "New York",
-      "Amsterdam",
-      "Hong Kong"
-    ]
+    "ui:enumNames": ["New York", "Amsterdam", "Hong Kong"]
   },
   "checkboxes": {
     "ui:widget": "CheckboxesWidget",
-    "ui:enumNames": [
-      "New York",
-      "Amsterdam",
-      "Hong Kong"
-    ]
+    "ui:enumNames": ["New York", "Amsterdam", "Hong Kong"]
   }
 }

@@ -1,13 +1,13 @@
-
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import https from 'https';
+import fs from 'node:fs';
+import https from 'node:https';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const testDataDir = path.resolve(__dirname, '../testdata');
 
-const SAMPLES_URL = 'https://raw.githubusercontent.com/rjsf-team/react-jsonschema-form/main/packages/playground/src/samples/';
+const SAMPLES_URL =
+  'https://raw.githubusercontent.com/rjsf-team/react-jsonschema-form/main/packages/playground/src/samples/';
 
 const FILES = [
   'additionalProperties.ts',
@@ -39,14 +39,16 @@ const FILES = [
   'schemaDependencies.ts',
   'simple.ts',
   'single.ts',
-  'validation.ts'
+  'validation.ts',
 ];
 
 function fetchContent(filename) {
   return new Promise((resolve, reject) => {
     https.get(SAMPLES_URL + filename, (res) => {
       let data = '';
-      res.on('data', chunk => data += chunk);
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
       res.on('end', () => resolve(data));
       res.on('error', reject);
     });

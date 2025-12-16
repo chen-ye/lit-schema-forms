@@ -6,8 +6,8 @@ export function renderStringField(schema: any, value: any, onChange: (val: strin
     <wa-input
       label=${schema.title || ''}
       value=${value || ''}
-      placeholder=${view && view['ui:placeholder'] ? view['ui:placeholder'] : ''}
-      help-text=${view && view['ui:help'] ? view['ui:help'] : ''}
+      placeholder=${view?.['ui:placeholder'] ? view['ui:placeholder'] : ''}
+      help-text=${view?.['ui:help'] ? view['ui:help'] : ''}
       @wa-input=${(e: any) => onChange(e.target.value)}
     ></wa-input>
   `;
