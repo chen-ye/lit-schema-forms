@@ -26,5 +26,6 @@
   "references",
   "schemaDependencies",
   "simple",
-  "single"
+  "single",
+  "widgets"
 ]

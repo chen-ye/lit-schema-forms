@@ -1,0 +1,21 @@
+{
+  "stringWidgets": {
+    "password": { "ui:widget": "password" },
+    "email": { "ui:widget": "email" },
+    "date": { "ui:widget": "date" },
+    "color": { "ui:widget": "color" },
+    "textarea": { "ui:widget": "textarea" },
+    "hidden": { "ui:widget": "hidden" }
+  },
+  "numberWidgets": {
+    "range": { "ui:widget": "range", "ui:help": "Select a value between 0 and 50" },
+    "radioNumber": { "ui:widget": "radio" }
+  },
+  "selectionWidgets": {
+    "radioString": { "ui:widget": "radio", "ui:help": "Pick one option" }
+  },
+  "files": {
+    "ui:widget": "file",
+    "ui:options": { "accept": "image/*" }
+  }
+}

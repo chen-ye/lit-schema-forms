@@ -4,6 +4,7 @@ import { mergeSchemas } from '../utils/schema-utils.js';
 import { renderArrayField } from './ArrayField.js';
 import { renderBooleanField } from './BooleanField.js';
 import { renderCompositionField } from './CompositionField.js';
+import { renderFileField } from './FileField.js';
 import { renderNullField } from './NullField.js';
 import { renderNumberField } from './NumberField.js';
 import { renderObjectField } from './ObjectField.js';
@@ -24,6 +25,13 @@ export function renderField(
 ): TemplateResult {
   const fieldView = key === '' ? view : (view[key] as UISchema) || {};
   const currentPath = path ? `${path}/${key}` : key ? `/${key}` : '';
+
+  if (fieldView['ui:widget'] === 'hidden') {
+    return html``;
+  }
+  if (fieldView['ui:widget'] === 'file') {
+    return renderFileField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors);
+  }
 
   // Handle allOf (merge and render)
   if (schema.allOf) {

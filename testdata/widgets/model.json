@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "title": "Widget Showcase",
+  "properties": {
+    "stringWidgets": {
+      "type": "object",
+      "title": "String Widgets",
+      "properties": {
+        "password": { "type": "string", "title": "Password" },
+        "email": { "type": "string", "title": "Email" },
+        "date": { "type": "string", "title": "Date" },
+        "color": { "type": "string", "title": "Color" },
+        "textarea": { "type": "string", "title": "Textarea" },
+        "hidden": { "type": "string", "title": "Hidden Value", "default": "I am hidden" }
+      }
+    },
+    "numberWidgets": {
+      "type": "object",
+      "title": "Number Widgets",
+      "properties": {
+        "range": { "type": "number", "title": "Range (Slider)", "minimum": 0, "maximum": 50, "multipleOf": 5 },
+        "radioNumber": { "type": "number", "title": "Number Radio", "enum": [1, 2, 3] }
+      }
+    },
+    "selectionWidgets": {
+      "type": "object",
+      "title": "Selection Widgets",
+      "properties": {
+        "radioString": { "type": "string", "title": "String Radio", "enum": ["Option A", "Option B", "Option C"] }
+      }
+    },
+    "files": {
+      "type": "string",
+      "title": "File Upload",
+      "description": "Upload a file (converted to Data URL)"
+    }
+  }
+}

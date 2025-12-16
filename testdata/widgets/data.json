@@ -1,0 +1,12 @@
+{
+  "stringWidgets": {
+    "hidden": "I am hidden"
+  },
+  "numberWidgets": {
+    "range": 25,
+    "radioNumber": 2
+  },
+  "selectionWidgets": {
+    "radioString": "Option B"
+  }
+}
