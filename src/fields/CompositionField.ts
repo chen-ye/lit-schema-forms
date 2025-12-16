@@ -4,7 +4,7 @@ import { renderField } from './index.js';
 import '@awesome.me/webawesome/dist/components/select/select.js';
 import type WaSelect from '@awesome.me/webawesome/dist/components/select/select.js';
 import '@awesome.me/webawesome/dist/components/option/option.js';
-import type { ChangeHandler, JSONSchema, UISchema } from '../types.js';
+import type { ChangeHandler, JSONSchema, UISchema, WidgetRegistry } from '../types.js';
 import type { ValidationError } from '../utils/validator.js';
 
 @customElement('lsf-composition-field')
@@ -14,9 +14,12 @@ export class LsfCompositionField extends LitElement {
   @property({ type: Object }) accessor view: UISchema = {};
   @property({ type: String }) accessor path: string = '';
   @property({ type: Array }) accessor errors: ValidationError[] = [];
+  @property({ type: Object }) accessor widgets: WidgetRegistry = {};
   @property({ attribute: false }) accessor onChange: ChangeHandler = () => {};
 
   @state() private accessor selectedIndex: number = 0;
+
+  // ... rest of class ...
 
   protected createRenderRoot() {
     return this; // Render in light DOM to inherit styles/form context
@@ -75,8 +78,6 @@ export class LsfCompositionField extends LitElement {
          this.selectedIndex = bestMatch;
       }
     }
-    // If we have data but no strong property match, we might be in an ambiguous state (e.g. empty object).
-    // In that case, TRUST THE STATE (don't overwrite selectedIndex).
   }
 
   private handleOptionChange(e: Event) {
@@ -126,7 +127,7 @@ export class LsfCompositionField extends LitElement {
           </wa-select>
         </div>
 
-        ${renderField('option-' + this.selectedIndex, currentSchema, this.value, (_k, val) => this.onChange(val), this.view, this.path, this.errors)}
+        ${renderField('option-' + this.selectedIndex, currentSchema, this.value, (_k, val) => this.onChange(val), this.view, this.path, this.errors, this.widgets)}
       </div>
     `;
   }
@@ -140,6 +141,7 @@ export function renderCompositionField(
   view: UISchema = {},
   path: string = '',
   errors: ValidationError[] = [],
+  widgets: WidgetRegistry = {},
 ) {
   return html`
     <lsf-composition-field
@@ -149,6 +151,7 @@ export function renderCompositionField(
       .view=${view}
       .path=${path}
       .errors=${errors}
+      .widgets=${widgets}
     ></lsf-composition-field>
   `;
 }

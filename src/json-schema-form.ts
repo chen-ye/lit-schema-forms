@@ -1,7 +1,7 @@
 import { css, html, LitElement, type PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { renderField } from './fields/index.js';
-import type { JSONSchema, UISchema } from './types.js';
+import type { JSONSchema, UISchema, WidgetRegistry } from './types.js';
 import { createValidator, type SchemaValidator, type ValidationError } from './utils/validator.js';
 
 @customElement('wa-json-schema-form')
@@ -24,6 +24,7 @@ export class JsonSchemaForm extends LitElement {
   @property({ type: Object }) accessor schema: JSONSchema = {};
   @property({ type: Object }) accessor view: UISchema = {};
   @property({ type: Object }) accessor data: Record<string, unknown> = {};
+  @property({ type: Object }) accessor widgets: WidgetRegistry = {};
 
   @state() private accessor validationErrors: ValidationError[] = [];
 
@@ -85,6 +86,7 @@ export class JsonSchemaForm extends LitElement {
       this.view || {},
       '', // root path
       this.validationErrors,
+      this.widgets,
     );
   }
 

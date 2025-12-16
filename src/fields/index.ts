@@ -22,9 +22,16 @@ export function renderField(
   view: UISchema = {},
   path: string = '',
   errors: ValidationError[] = [],
+  widgets: WidgetRegistry = {},
 ): TemplateResult {
   const fieldView = key === '' ? view : (view[key] as UISchema) || {};
   const currentPath = path ? `${path}/${key}` : key ? `/${key}` : '';
+
+  // Check for custom widget in registry
+  const widgetName = fieldView['ui:widget'];
+  if (widgetName && typeof widgetName === 'string' && widgets[widgetName]) {
+    return widgets[widgetName](key, schema, value, onChange, fieldView, currentPath, errors);
+  }
 
   if (fieldView['ui:widget'] === 'hidden') {
     return html``;
@@ -36,12 +43,12 @@ export function renderField(
   // Handle allOf (merge and render)
   if (schema.allOf) {
     const merged = mergeSchemas(schema.allOf as JSONSchema[]);
-    return renderField(key, merged, value, onChange, view, path, errors);
+    return renderField(key, merged, value, onChange, view, path, errors, widgets);
   }
 
   // Handle Composition (oneOf / anyOf)
   if (schema.oneOf || schema.anyOf) {
-    return renderCompositionField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors);
+    return renderCompositionField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors, widgets);
   }
 
   // Handle Enum -> Select
@@ -52,12 +59,12 @@ export function renderField(
   // Handle specific types
   // Infer object if properties exist but type is missing
   if (schema.type === 'object' || schema.properties) {
-    return renderObjectField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors);
+    return renderObjectField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors, widgets);
   }
 
   switch (schema.type) {
     case 'array':
-      return renderArrayField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors);
+      return renderArrayField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors, widgets);
 
     case 'string':
       return renderStringField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors);

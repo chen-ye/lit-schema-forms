@@ -1,5 +1,5 @@
 import { html, type TemplateResult } from 'lit';
-import type { ChangeHandler, JSONSchema, UISchema } from '../types.js';
+import type { ChangeHandler, JSONSchema, UISchema, WidgetRegistry } from '../types.js';
 import type { ValidationError } from '../utils/validator.js';
 import { renderField } from './index.js';
 
@@ -11,6 +11,7 @@ export function renderObjectField(
   view: UISchema = {},
   path: string = '',
   errors: ValidationError[] = [],
+  widgets: WidgetRegistry = {},
 ): TemplateResult {
   if (!schema.properties) {
     return html``;
@@ -36,6 +37,7 @@ export function renderObjectField(
             view,
             `${path}/${key}`,
             errors,
+            widgets,
           );
         })}
       </div>

@@ -2,7 +2,7 @@ import { html, type TemplateResult } from 'lit';
 import { renderField } from './index.js';
 import '@awesome.me/webawesome/dist/components/button/button.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
-import type { ChangeHandler, JSONSchema, UISchema } from '../types.js';
+import type { ChangeHandler, JSONSchema, UISchema, WidgetRegistry } from '../types.js';
 import type { ValidationError } from '../utils/validator.js';
 
 export function renderArrayField(
@@ -13,6 +13,7 @@ export function renderArrayField(
   view: UISchema = {},
   path: string = '',
   errors: ValidationError[] = [],
+  widgets: WidgetRegistry = {},
 ) {
   const items = (Array.isArray(value) ? value : []) as unknown[];
   const itemSchema = (schema.items as JSONSchema) || {};
@@ -67,6 +68,7 @@ export function renderArrayField(
                 view,
                 `${path}/${index}`,
                 errors,
+                widgets,
               )}
             </div>
             <wa-button variant="danger" size="small" outline @click=${() => handleRemove(index)}>
