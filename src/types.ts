@@ -1,16 +1,9 @@
-export interface JSONSchema {
-  type?: string;
-  title?: string;
-  description?: string;
-  properties?: Record<string, JSONSchema>;
-  items?: JSONSchema | JSONSchema[];
-  enum?: (string | number)[];
-  required?: string[];
-  oneOf?: JSONSchema[];
-  anyOf?: JSONSchema[];
-  allOf?: JSONSchema[];
-  [key: string]: unknown;
-}
+import type { JSONSchema as StandardJSONSchema } from 'json-schema-typed';
+
+// Our application generally assumes the schema is an object (with .type, .properties etc.)
+// Standard JSON Schema allows it to be a boolean (true/false), but we exclude that for our internal usages
+// to prevent TS errors when accessing properties.
+export type JSONSchema = Extract<StandardJSONSchema, object>;
 
 export interface UISchema {
   [key: string]: unknown; // Can contain nested UI config or string properties
@@ -35,6 +28,7 @@ export type WidgetRenderer = (
   view: UISchema,
   path: string,
   errors: import('./utils/validator.js').ValidationError[],
+  widgets: WidgetRegistry, // Circular reference if we are not careful? No, interface allows it.
 ) => import('lit').TemplateResult;
 
 export interface WidgetRegistry {

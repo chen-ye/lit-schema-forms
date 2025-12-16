@@ -80,7 +80,7 @@ describe('Examples Verification', () => {
         expect(form?.children.length).to.be.greaterThan(0, `Example '${name}' rendered empty form`);
       } catch (e) {
         console.error(`Example '${name}' failed:`, e);
-        throw new Error(`Example '${name}' failed to render: ${e.message}`);
+        throw new Error(`Example '${name}' failed to render: ${(e as Error).message}`);
       }
     }
   });

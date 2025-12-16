@@ -17,7 +17,7 @@ describe('JsonSchemaForm', () => {
       <wa-json-schema-form .schema=${schema} .data=${data}></wa-json-schema-form>
     `);
 
-    const inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    const inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(2);
 
     const firstNameInput = inputs[0] as any;

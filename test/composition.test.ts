@@ -13,7 +13,7 @@ describe('Schema Composition', () => {
     const el: JsonSchemaForm = await fixture(html`<wa-json-schema-form .schema=${schema}></wa-json-schema-form>`);
 
     // Should render inputs for both foo (string) and bar (number)
-    const inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    const inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(2);
     expect(inputs[0].label).to.equal('Foo');
     expect(inputs[1].label).to.equal('Bar');
@@ -33,14 +33,14 @@ describe('Schema Composition', () => {
     expect(select).to.exist;
 
     // Default to first option (string)
-    const inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    const inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(1);
     expect(inputs[0].type).to.not.equal('number'); // wa-input default type is text
 
     // Switch to option 2
     // biome-ignore lint/style/noNonNullAssertion: Test utility
     select!.value = '1';
-    select?.dispatchEvent(new CustomEvent('input', { bubbles: true })); // CompositionField listens to input
+    select!.dispatchEvent(new CustomEvent('input', { bubbles: true })); // CompositionField listens to input
 
     await el.updateComplete;
     // Wait for internal re-render or event based update?

@@ -10,6 +10,8 @@
     "start": "web-dev-server --config web-dev-server.config.mjs --watch",
     "test": "web-test-runner",
     "check": "biome check .",
+    "build": "tsc",
+    "check:types": "tsc -p tsconfig.test.json",
     "lint": "biome check --write ."
   },
   "dependencies": {
@@ -25,6 +27,7 @@
     "@web/dev-server": "^0.4.6",
     "@web/dev-server-esbuild": "^1.0.4",
     "@web/test-runner": "^0.20.2",
+    "json-schema-typed": "^8.0.2",
     "typescript": "^5.9.3"
   }
 }

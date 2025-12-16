@@ -36,7 +36,7 @@ export function renderFileField(
       <input
         type="file"
         @change=${handleFileChange}
-        accept=${(view['ui:options']?.accept as string) || ''}
+        accept=${((view['ui:options'] as Record<string, unknown>)?.accept as string) || ''}
         style="display: block; width: 100%;"
       />
       ${value ? html`<div style="font-size: 0.8rem; margin-top: 0.25rem; word-break: break-all; color: #666;">Current: ${(value as string).substring(0, 30)}...</div>` : ''}

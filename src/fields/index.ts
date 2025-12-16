@@ -1,5 +1,5 @@
 import { html, type TemplateResult } from 'lit';
-import type { JSONSchema, KeyChangeHandler, UISchema } from '../types.js';
+import type { JSONSchema, KeyChangeHandler, UISchema, WidgetRegistry } from '../types.js';
 import { mergeSchemas } from '../utils/schema-utils.js';
 import { renderArrayField } from './ArrayField.js';
 import { renderBooleanField } from './BooleanField.js';
@@ -30,7 +30,7 @@ export function renderField(
   // Check for custom widget in registry
   const widgetName = fieldView['ui:widget'];
   if (widgetName && typeof widgetName === 'string' && widgets[widgetName]) {
-    return widgets[widgetName](key, schema, value, onChange, fieldView, currentPath, errors);
+    return widgets[widgetName](key, schema, value, onChange, fieldView, currentPath, errors, widgets);
   }
 
   if (fieldView['ui:widget'] === 'hidden') {

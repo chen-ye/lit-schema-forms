@@ -20,13 +20,13 @@ describe('JsonSchemaForm Complex Fields', () => {
     const el: JsonSchemaForm = await fixture(html`<wa-json-schema-form .schema=${schema}></wa-json-schema-form>`);
 
     // Check for nested inputs
-    const inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    const inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(2);
     expect(inputs[0].label).to.equal('Created');
     expect(inputs[1].label).to.equal('Version');
 
     // Check for grouping title
-    const headings = el.shadowRoot?.querySelectorAll('h3');
+    const headings = el.shadowRoot!.querySelectorAll('h3');
     expect(headings.length).to.be.greaterThan(0);
     expect(Array.from(headings).find((h) => h.textContent === 'Metadata')).to.exist;
   });
@@ -45,12 +45,12 @@ describe('JsonSchemaForm Complex Fields', () => {
     const el: JsonSchemaForm = await fixture(html`<wa-json-schema-form .schema=${schema}></wa-json-schema-form>`);
 
     // Initially no items
-    let inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    let inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(0);
 
     // Click Add
     // biome-ignore lint/style/noNonNullAssertion: Test utility
-    const button = el.shadowRoot.querySelector('wa-button')!;
+    const button = el.shadowRoot!.querySelector('wa-button')!;
     expect(button.textContent?.trim()).to.equal('Add');
 
     // Setup listener BEFORE action to catch sync events
@@ -64,7 +64,7 @@ describe('JsonSchemaForm Complex Fields', () => {
     await el.updateComplete;
 
     // Now check inputs
-    inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(1);
   });
 
@@ -83,12 +83,12 @@ describe('JsonSchemaForm Complex Fields', () => {
       html`<wa-json-schema-form .schema=${schema} .data=${data}></wa-json-schema-form>`,
     );
 
-    let inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    let inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(2);
     expect(inputs[0].value).to.equal('A');
 
     // Find remove buttons (variant="danger")
-    const buttons = Array.from(el.shadowRoot?.querySelectorAll('wa-button'));
+    const buttons = Array.from(el.shadowRoot!.querySelectorAll('wa-button'));
     const removeBtn = buttons.find((b) => b.variant === 'danger');
     expect(removeBtn).to.exist;
 
@@ -100,7 +100,7 @@ describe('JsonSchemaForm Complex Fields', () => {
     expect(detail.data.tags[0]).to.equal('B'); // B should remain if we removed index 0
 
     await el.updateComplete;
-    inputs = el.shadowRoot?.querySelectorAll('wa-input');
+    inputs = el.shadowRoot!.querySelectorAll('wa-input');
     expect(inputs.length).to.equal(1);
     expect(inputs[0].value).to.equal('B');
   });
@@ -121,7 +121,7 @@ describe('JsonSchemaForm Complex Fields', () => {
     );
 
     // biome-ignore lint/style/noNonNullAssertion: Test utility
-    const input = el.shadowRoot.querySelector('wa-input')!;
+    const input = el.shadowRoot!.querySelector('wa-input')!;
 
     const listener = oneEvent(el, 'lsf-change');
     input.value = 'New';
