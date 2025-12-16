@@ -1,0 +1,8 @@
+{
+  "customString": {
+    "ui:widget": "custom-input"
+  },
+  "counter": {
+    "ui:widget": "counter-widget"
+  }
+}

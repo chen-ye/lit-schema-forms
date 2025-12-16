@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "title": "Custom Widgets Demo",
+  "properties": {
+    "customString": {
+      "type": "string",
+      "title": "Custom Styled Input"
+    },
+    "counter": {
+      "type": "number",
+      "title": "Counter Widget",
+      "default": 0
+    },
+    "notes": {
+      "type": "string",
+      "title": "Standard Field (for comparison)"
+    }
+  }
+}

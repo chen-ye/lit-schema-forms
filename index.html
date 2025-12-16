@@ -70,7 +70,38 @@
   <script type="module">
     import '@awesome.me/webawesome/dist/components/button/button.js';
     import '@awesome.me/webawesome/dist/components/select/select.js';
+    import '@awesome.me/webawesome/dist/components/select/select.js';
     import '@awesome.me/webawesome/dist/components/option/option.js';
+    import { html } from 'lit';
+
+    const customWidgets = {
+      'custom-input': (key, schema, value, onChange) => {
+        return html`
+          <div style="border: 2px dashed var(--wa-color-primary-500); padding: 1rem; border-radius: 8px; background: var(--wa-color-primary-50); margin-bottom: 1rem;">
+            <label style="color: var(--wa-color-primary-700); font-weight: bold; display: block; margin-bottom: 0.5rem;">${schema.title || key} ✨</label>
+            <wa-input
+              value=${value || ''}
+              @wa-input=${(e) => onChange(e.target.value)}
+            ></wa-input>
+          </div>
+        `;
+      },
+      'counter-widget': (key, schema, value, onChange) => {
+        const count = Number(value) || 0;
+        return html`
+          <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 1rem;">
+            <label style="font-weight: bold;">${schema.title || key}</label>
+            <wa-button @click=${() => onChange(count - 1)} size="small" variant="neutral">
+              <wa-icon name="minus" slot="prefix"></wa-icon>
+            </wa-button>
+            <span style="font-size: 1.2rem; min-width: 2rem; text-align: center;">${count}</span>
+            <wa-button @click=${() => onChange(count + 1)} size="small" variant="brand">
+              <wa-icon name="plus" slot="prefix"></wa-icon>
+            </wa-button>
+          </div>
+        `;
+      }
+    };
 
     const form = document.getElementById('form');
     const output = document.getElementById('output');
@@ -108,6 +139,35 @@
         form.schema = model;
         form.view = view || {};
         form.data = data || {};
+
+        // Define Custom Widgets Registry
+        const widgets = {
+          'custom-input': (key, schema, value, onChange) => {
+             return document.createElement('div').innerHTML = `
+              <div style="border: 2px dashed var(--wa-color-primary-500); padding: 10px; border-radius: 8px; background: var(--wa-color-primary-50);">
+                <label style="color: var(--wa-color-primary-700); font-weight: bold; display: block; margin-bottom: 5px;">${schema.title || key} (Custom)</label>
+                <wa-input
+                  value="${value || ''}"
+                  @wa-input="${(e) => onChange(e.target.value)}"
+                  style="--border-color: var(--wa-color-primary-300);"
+                ></wa-input>
+              </div>
+             `;
+             // Note: Returning HTML string or DOM node via Lit depends on implementation.
+             // Our renderField expects TemplateResult.
+             // index.html uses vanilla JS, so we can't easily import `html` from `lit`.
+             // However, our WidgetRenderer return type is TemplateResult.
+             // We can import `html` from a CDN or use a simple object if Lit handles it, but Lit expects TemplateResult.
+             // Actually, since we are in a module script, we can import { html } from 'lit'.
+          },
+          'counter-widget': (key, schema, value, onChange) => {
+             // We will implement this in the script module below using lit.
+             return null;
+          }
+        };
+
+        // Wait, index.html is valid module. I can import html from lit.
+        form.widgets = customWidgets;
 
         output.textContent = JSON.stringify(data || {}, null, 2);
         schemaDisplay.textContent = JSON.stringify(model || {}, null, 2);

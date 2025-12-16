@@ -26,6 +26,7 @@
   "references",
   "schemaDependencies",
   "simple",
-  "single",
-  "widgets"
+  "const",
+  "widgets",
+  "customWidgets"
 ]
