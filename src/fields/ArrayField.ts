@@ -1,14 +1,26 @@
-import { html, TemplateResult } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { renderField } from './index.js';
 import '@awesome.me/webawesome/dist/components/button/button.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
+import type { ChangeHandler, JSONSchema, UISchema } from '../types.js';
 
-export function renderArrayField(schema: any, value: any[], onChange: (val: any[]) => void, view: any = {}) {
-  const items = value || [];
-  const itemSchema = schema.items || {};
+export function renderArrayField(schema: JSONSchema, value: unknown, onChange: ChangeHandler, view: UISchema = {}) {
+  const items = (Array.isArray(value) ? value : []) as unknown[];
+  const itemSchema = (schema.items as JSONSchema) || {};
 
   const handleAdd = () => {
-    const newItems = [...items, getDefaultValue(itemSchema)];
+    let newItem: unknown;
+    const itemsSchema = schema.items as JSONSchema;
+
+    if (itemsSchema) {
+      if (itemsSchema.type === 'string') newItem = '';
+      if (itemsSchema.type === 'number' || itemsSchema.type === 'integer') newItem = 0;
+      if (itemsSchema.type === 'boolean') newItem = false;
+      if (itemsSchema.type === 'object') newItem = {};
+      if (itemsSchema.type === 'array') newItem = [];
+    }
+
+    const newItems = [...items, newItem];
     onChange(newItems);
   };
 
@@ -17,17 +29,20 @@ export function renderArrayField(schema: any, value: any[], onChange: (val: any[
     onChange(newItems);
   };
 
-  const handleChange = (index: number, val: any) => {
+  const handleChange = (index: number, val: unknown) => {
     const newItems = [...items];
     newItems[index] = val;
     onChange(newItems);
   };
 
   return html`
-    <div class="array-field">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <label>${schema.title || 'Items'}</label>
-        <wa-button size="small" @click=${handleAdd}>Add</wa-button>
+    <div class="array-field" style="border: 1px solid #eee; padding: 1rem; border-radius: 4px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <label style="font-weight: 500;">${schema.title || 'Array'}</label>
+        <wa-button size="small" @click=${handleAdd}>
+          <wa-icon slot="prefix" name="plus"></wa-icon>
+          Add
+        </wa-button>
       </div>
 
       <div class="array-items" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
@@ -35,31 +50,15 @@ export function renderArrayField(schema: any, value: any[], onChange: (val: any[
           (item, index): TemplateResult => html`
           <div class="array-item" style="display: flex; gap: 0.5rem; align-items: flex-start; border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px;">
             <div style="flex: 1;">
-              ${renderField(
-                String(index),
-                itemSchema,
-                item,
-                (_, val) => handleChange(index, val),
-                view.items || {}, // Assuming view.items holds config for items
-              )}
+              ${renderField(String(index), itemSchema, item, (_key, val) => handleChange(index, val), view)}
             </div>
-            <wa-button variant="danger" size="small" @click=${() => handleRemove(index)}>
-               <wa-icon name="trash" label="Remove"></wa-icon>
+            <wa-button variant="danger" size="small" outline @click=${() => handleRemove(index)}>
+               <wa-icon name="trash"></wa-icon>
             </wa-button>
           </div>
-        `,
+          `,
         )}
       </div>
     </div>
   `;
-}
-
-function getDefaultValue(schema: any) {
-  if (schema.default !== undefined) return schema.default;
-  if (schema.type === 'string') return '';
-  if (schema.type === 'number') return 0;
-  if (schema.type === 'boolean') return false;
-  if (schema.type === 'object') return {};
-  if (schema.type === 'array') return [];
-  return undefined;
 }

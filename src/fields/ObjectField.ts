@@ -1,13 +1,14 @@
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
+import type { ChangeHandler, JSONSchema, UISchema } from '../types.js';
 import { renderField } from './index.js';
 
 export function renderObjectField(
-  schema: any,
-  value: any,
-  onChange: (val: any) => void,
-  view: any = {},
+  schema: JSONSchema,
+  value: unknown,
+  onChange: ChangeHandler,
+  view: UISchema = {},
   _keyPath: string = '',
-) {
+): TemplateResult {
   if (!schema.properties) {
     return html``;
   }

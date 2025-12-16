@@ -77,8 +77,8 @@ describe('JsonSchemaForm', () => {
     expect(select).to.exist;
     expect(select.label).to.equal('Color');
 
-    const options = select.querySelectorAll('wa-option');
-    expect(options.length).to.equal(2);
+    // Expect 3 options (including placeholder).
+    expect(select.querySelectorAll('wa-option').length).to.equal(3);
   });
 
   it('renders textarea when widget is textarea', async () => {

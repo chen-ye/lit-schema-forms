@@ -1,38 +1,31 @@
-import { css, html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { renderField } from './fields/index.js';
+import type { JSONSchema, UISchema } from './types.js';
 
 @customElement('wa-json-schema-form')
 export class JsonSchemaForm extends LitElement {
   static styles = css`
     :host {
       display: block;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      font-family: var(--wa-font-sans, sans-serif);
     }
   `;
 
-  @property({ type: Object }) accessor schema: any = {};
-  @property({ type: Object }) accessor view: any = {};
-  @property({ type: Object }) accessor data: any = {};
+  @property({ type: Object }) accessor schema: JSONSchema = {};
+  @property({ type: Object }) accessor view: UISchema = {};
+  @property({ type: Object }) accessor data: Record<string, unknown> = {};
 
-  render() {
-    return html`
-      <form>
-        ${this.renderFields()}
-      </form>
-    `;
-  }
-
-  private handleFieldChange(key: string, value: any) {
+  private handleFieldChange(key: string, value: unknown) {
+    let newData: Record<string, unknown>;
     if (key === '') {
-      this.data = value;
+      // Root update
+      newData = value as Record<string, unknown>;
     } else {
-      this.data = { ...this.data, [key]: value };
+      // Basic immutable update
+      newData = { ...this.data, [key]: value };
     }
+    this.data = newData;
 
     this.dispatchEvent(
       new CustomEvent('lsf-change', {
@@ -51,6 +44,14 @@ export class JsonSchemaForm extends LitElement {
 
     // Treat the entire form as a single root field
     return renderField('', this.schema, this.data, (key, val) => this.handleFieldChange(key, val), this.view || {});
+  }
+
+  render() {
+    return html`
+      <form @submit=${(e: Event) => e.preventDefault()}>
+        ${this.renderFields()}
+      </form>
+    `;
   }
 }
 

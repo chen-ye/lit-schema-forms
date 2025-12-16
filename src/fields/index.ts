@@ -1,4 +1,5 @@
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
+import type { JSONSchema, KeyChangeHandler, UISchema } from '../types.js';
 import { mergeSchemas } from '../utils/schema-utils.js';
 import { renderArrayField } from './ArrayField.js';
 import { renderBooleanField } from './BooleanField.js';
@@ -12,16 +13,16 @@ import '@awesome.me/webawesome/dist/components/textarea/textarea.js';
 
 export function renderField(
   key: string,
-  schema: any,
-  value: any,
-  onChange: (key: string, val: any) => void,
-  view: any = {},
-) {
-  const fieldView = view[key] || {};
+  schema: JSONSchema,
+  value: unknown,
+  onChange: KeyChangeHandler,
+  view: UISchema = {},
+): TemplateResult {
+  const fieldView = key === '' ? view : (view[key] as UISchema) || {};
 
   // Handle allOf (merge and render)
   if (schema.allOf) {
-    const merged = mergeSchemas(schema.allOf);
+    const merged = mergeSchemas(schema.allOf as JSONSchema[]);
     return renderField(key, merged, value, onChange, view);
   }
 
@@ -37,37 +38,33 @@ export function renderField(
 
   // Handle specific types
   switch (schema.type) {
-    case 'null':
-      return renderNullField(schema);
+    case 'object':
+      return renderObjectField(schema, value, (val) => onChange(key, val), fieldView);
+
+    case 'array':
+      return renderArrayField(schema, value, (val) => onChange(key, val), fieldView);
 
     case 'string':
-      if (fieldView['ui:widget'] === 'textarea') {
-        return html`
-           <wa-textarea
-             label=${schema.title || ''}
-             value=${value || ''}
-             help-text=${fieldView['ui:help'] || ''}
-             @wa-input=${(e: any) => onChange(key, e.target.value)}
-           ></wa-textarea>
-         `;
-      }
       return renderStringField(schema, value, (val) => onChange(key, val), fieldView);
 
-    case 'integer':
-      return renderNumberField(schema, value, (val) => onChange(key, val), fieldView);
     case 'number':
+    case 'integer':
       return renderNumberField(schema, value, (val) => onChange(key, val), fieldView);
 
     case 'boolean':
       return renderBooleanField(schema, value, (val) => onChange(key, val), fieldView);
 
-    case 'object':
-      return renderObjectField(schema, value, (val) => onChange(key, val), view);
-
-    case 'array':
-      return renderArrayField(schema, value, (val) => onChange(key, val), fieldView);
+    case 'null':
+      return renderNullField(schema);
 
     default:
-      return html`<div>Unknown type: ${schema.type}</div>`;
+      return html`
+        <wa-textarea
+          label=${schema.title || key}
+          value=${String(value || '')}
+          help-text=${(fieldView['ui:help'] as string) || ''}
+          @wa-input=${(e: Event) => onChange(key, (e.target as HTMLInputElement).value)}
+        ></wa-textarea>
+      `;
   }
 }

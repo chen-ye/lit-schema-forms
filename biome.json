@@ -25,7 +25,8 @@
         "noUnusedVariables": "warn"
       },
       "suspicious": {
-        "noExplicitAny": "off"
+        "noExplicitAny": "warn",
+        "noImplicitAnyLet": "warn"
       }
     }
   },
