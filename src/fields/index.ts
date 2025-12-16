@@ -5,6 +5,9 @@ import { renderSelectField } from './SelectField.js';
 import { renderObjectField } from './ObjectField.js';
 import { renderArrayField } from './ArrayField.js';
 import { renderNumberField } from './NumberField.js';
+import { renderCompositionField } from './CompositionField.js';
+import { mergeSchemas } from '../utils/schema-utils.js';
+import { renderNullField } from './NullField.js';
 import '@awesome.me/webawesome/dist/components/textarea/textarea.js';
 
 export function renderField(
@@ -16,6 +19,17 @@ export function renderField(
 ) {
   const fieldView = view[key] || {};
 
+  // Handle allOf (merge and render)
+  if (schema.allOf) {
+     const merged = mergeSchemas(schema.allOf);
+     return renderField(key, merged, value, onChange, view);
+  }
+
+  // Handle Composition (oneOf / anyOf)
+  if (schema.oneOf || schema.anyOf) {
+    return renderCompositionField(schema, value, (val) => onChange(key, val), fieldView);
+  }
+
   // Handle Enum -> Select
   if (schema.enum) {
     return renderSelectField(schema, value, (val) => onChange(key, val), fieldView);
@@ -23,6 +37,9 @@ export function renderField(
 
   // Handle specific types
   switch (schema.type) {
+    case 'null':
+       return renderNullField(schema);
+
     case 'string':
       if (fieldView['ui:widget'] === 'textarea') {
          return html`
