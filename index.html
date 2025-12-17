@@ -131,6 +131,7 @@
 
   <!-- Import Web Awesome -->
   <link rel="stylesheet" href="https://ga.jspm.io/npm:@awesome.me/webawesome@3.0.0/dist/styles/webawesome.css">
+  <link id="theme-sheet" rel="stylesheet" href="https://ga.jspm.io/npm:@awesome.me/webawesome@3.0.0/dist/styles/themes/default.css">
 </head>
 <body>
   <!-- Import map -->
@@ -172,6 +173,12 @@
   <header>
     <h1>Lit Schema Form</h1>
     <div class="controls">
+      <wa-select id="theme-select" value="default" size="small" style="width: 140px;">
+        <wa-option value="default">Default</wa-option>
+        <wa-option value="awesome">Awesome</wa-option>
+        <wa-option value="shoelace">Shoelace</wa-option>
+      </wa-select>
+      <wa-button id="mode-toggle"><wa-icon name="sun"></wa-icon></wa-button>
       <wa-select id="example-select" placeholder="Select Example" size="small"></wa-select>
     </div>
   </header>
@@ -255,6 +262,23 @@
     const schemaDisplay = document.getElementById('schema-display');
     const uiSchemaDisplay = document.getElementById('uischema-display');
     const select = document.getElementById('example-select');
+
+    // Theme & Mode Controls
+    const themeSelect = document.getElementById('theme-select');
+    const themeSheet = document.getElementById('theme-sheet');
+    const modeToggle = document.getElementById('mode-toggle');
+
+    // Theme Switching
+    themeSelect.addEventListener('input', (e) => {
+      const theme = e.target.value;
+      themeSheet.href = `https://ga.jspm.io/npm:@awesome.me/webawesome@3.0.0/dist/styles/themes/${theme}.css`;
+    });
+
+    // Dark Mode Toggle
+    modeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('wa-dark');
+      modeToggle.querySelector('wa-icon')?.setAttribute('name', isDark ? 'moon' : 'sun');
+    });
 
     async function loadManifest() {
       try {
