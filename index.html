@@ -272,6 +272,14 @@
     themeSelect.addEventListener('input', (e) => {
       const theme = e.target.value;
       themeSheet.href = `https://ga.jspm.io/npm:@awesome.me/webawesome@3.0.0/dist/styles/themes/${theme}.css`;
+      // Remove wa-theme-* classes
+      for (const className of document.documentElement.classList) {
+        if (className.startsWith('wa-theme-')) {
+          document.documentElement.classList.remove(className);
+        }
+      }
+      // Add wa-theme-{theme} class
+      document.documentElement.classList.add(`wa-theme-${theme}`);
     });
 
     // Dark Mode Toggle
