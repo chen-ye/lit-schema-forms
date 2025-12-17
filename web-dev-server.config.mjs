@@ -1,9 +1,9 @@
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 export default {
-  nodeResolve: {
-    browser: true,
-  },
+  // nodeResolve: {
+  //   browser: true,
+  // },
   plugins: [
     esbuildPlugin({
       ts: true,

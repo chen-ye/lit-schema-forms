@@ -41,9 +41,48 @@
 
   <!-- Import Web Awesome -->
   <link rel="stylesheet" href="/node_modules/@awesome.me/webawesome/dist/styles/webawesome.css">
-  <script type="module" src="./src/json-schema-form.ts"></script>
+  <!-- <script type="module" src="./src/json-schema-form.ts"></script> -->
 </head>
 <body>
+  <!--
+    Import map generated with JSPM Generator
+    Edit here: https://generator.jspm.io/#TYxBDkAwFAX/wlUsfaUO8C/hANRDUU3aJnV8JBaWM5NMWRAV1J/JpgMTyZARvQM71BnjR6JZsSIxc/ZhR6i36M8qmhVukI6bt11q/+vKISyQJ3FLh03PQnNzA04OkzxuAA
+  -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@awesome.me/webawesome": "https://ga.jspm.io/npm:@awesome.me/webawesome@3.0.0/dist/webawesome.js",
+      "@awesome.me/webawesome/": "https://ga.jspm.io/npm:@awesome.me/webawesome@3.0.0/",
+      "@cfworker/json-schema": "https://ga.jspm.io/npm:@cfworker/json-schema@4.1.0/dist/esm/index.js",
+      "@x0k/json-schema-merge": "https://ga.jspm.io/npm:@x0k/json-schema-merge@1.0.2/dist/index.js",
+      "lit": "https://ga.jspm.io/npm:lit@3.3.1/index.js",
+      "lit/": "https://ga.jspm.io/npm:lit@3.3.1/",
+      "json-schema-form": "./dist/json-schema-form.js",
+      "composed-offset-position": "https://ga.jspm.io/npm:composed-offset-position@0.0.6/dist/composed-offset-position.browser.mjs",
+      "nanoid": "https://ga.jspm.io/npm:nanoid@5.1.6/index.browser.js"
+    },
+    "scopes": {
+      "https://ga.jspm.io/": {
+        "@floating-ui/core": "https://ga.jspm.io/npm:@floating-ui/core@1.7.3/dist/floating-ui.core.mjs",
+        "@floating-ui/dom": "https://ga.jspm.io/npm:@floating-ui/dom@1.7.4/dist/floating-ui.dom.mjs",
+        "@floating-ui/utils": "https://ga.jspm.io/npm:@floating-ui/utils@0.2.10/dist/floating-ui.utils.mjs",
+        "@floating-ui/utils/dom": "https://ga.jspm.io/npm:@floating-ui/utils@0.2.10/dist/floating-ui.utils.dom.mjs",
+        "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@2.1.1/development/reactive-element.js",
+        "@lit/reactive-element/": "https://ga.jspm.io/npm:@lit/reactive-element@2.1.1/development/",
+        "@shoelace-style/animations": "https://ga.jspm.io/npm:@shoelace-style/animations@1.2.0/dist/index.js",
+        "@shoelace-style/localize": "https://ga.jspm.io/npm:@shoelace-style/localize@3.2.1/dist/index.js",
+        "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@4.2.1/development/lit-element.js",
+        "lit-html": "https://ga.jspm.io/npm:lit-html@3.3.1/development/lit-html.js",
+        "lit-html/": "https://ga.jspm.io/npm:lit-html@3.3.1/development/",
+        "lit-html/is-server.js": "https://ga.jspm.io/npm:lit-html@3.3.1/development/is-server.js"
+      }
+    }
+  }
+  </script>
+
+  <!-- ES Module Shims import maps polyfills -->
+  <script async src="https://ga.jspm.io/npm:es-module-shims@2.7.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
+
   <header>
     <h1>Lit Schema Form Demo</h1>
     <div class="controls">
@@ -72,6 +111,7 @@
     import '@awesome.me/webawesome/dist/components/select/select.js';
     import '@awesome.me/webawesome/dist/components/select/select.js';
     import '@awesome.me/webawesome/dist/components/option/option.js';
+    import 'json-schema-form';
     import { html } from 'lit';
 
     const customWidgets = {
