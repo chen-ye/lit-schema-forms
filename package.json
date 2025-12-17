@@ -11,6 +11,7 @@
     "test": "web-test-runner",
     "check": "biome check .",
     "build": "tsc",
+    "build:watch": "tsc --watch",
     "check:types": "tsc -p tsconfig.test.json",
     "lint": "biome check --write ."
   },

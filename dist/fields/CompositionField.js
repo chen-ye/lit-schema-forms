@@ -32,11 +32,30 @@ var __runInitializers = (this && this.__runInitializers) || function (thisArg, i
     }
     return useValue ? value : void 0;
 };
-import { html, LitElement } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { renderField } from './index.js';
 import '@awesome.me/webawesome/dist/components/select/select.js';
 import '@awesome.me/webawesome/dist/components/option/option.js';
+export const compositionFieldStyles = css `
+  .composition-field {
+    border: 1px dashed var(--wa-color-neutral-border-normal);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  .composition-header {
+    margin-bottom: 1rem;
+  }
+  .composition-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  .composition-select {
+    max-width: 300px;
+  }
+`;
 let LsfCompositionField = (() => {
     let _classDecorators = [customElement('lsf-composition-field')];
     let _classDescriptor;
@@ -116,7 +135,6 @@ let LsfCompositionField = (() => {
         #selectedIndex_accessor_storage = (__runInitializers(this, _onChange_extraInitializers), __runInitializers(this, _selectedIndex_initializers, 0));
         get selectedIndex() { return this.#selectedIndex_accessor_storage; }
         set selectedIndex(value) { this.#selectedIndex_accessor_storage = value; }
-        // ... rest of class ...
         createRenderRoot() {
             return this; // Render in light DOM to inherit styles/form context
         }
@@ -201,14 +219,14 @@ let LsfCompositionField = (() => {
             }
             const currentSchema = options[this.selectedIndex] || options[0];
             return html `
-      <div class="composition-field" style="border: 1px dashed #ccc; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
-        <div style="margin-bottom: 1rem;">
-          <label style="display:block; margin-bottom: 0.5rem; font-weight: bold;">${this.schema.title || 'Options'}</label>
+      <div class="composition-field">
+        <div class="composition-header">
+          <label class="composition-label">${this.schema.title || 'Options'}</label>
           <wa-select
               value=${String(this.selectedIndex)}
               @input=${(e) => this.handleOptionChange(e)}
               size="small"
-              style="max-width: 300px;"
+              class="composition-select"
           >
             ${options.map((opt, i) => html `
               <wa-option value=${String(i)}>${opt.title || `Option ${i + 1}`}</wa-option>

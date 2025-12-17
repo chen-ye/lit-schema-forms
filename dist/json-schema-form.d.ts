@@ -1,7 +1,8 @@
 import { LitElement, type PropertyValues, TemplateResult } from 'lit';
 import type { JSONSchema, UISchema, WidgetRegistry } from './types.js';
+import '@awesome.me/webawesome/dist/components/callout/callout.js';
 export declare class JsonSchemaForm extends LitElement {
-    static styles: import("lit").CSSResult;
+    static styles: import("lit").CSSResult[];
     accessor schema: JSONSchema;
     accessor view: UISchema;
     accessor data: Record<string, unknown>;

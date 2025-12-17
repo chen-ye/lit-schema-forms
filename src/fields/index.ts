@@ -1,16 +1,24 @@
 import { html, type TemplateResult } from 'lit';
 import type { JSONSchema, KeyChangeHandler, UISchema, WidgetRegistry } from '../types.js';
 import { mergeSchemas } from '../utils/schema-utils.js';
-import { renderArrayField } from './ArrayField.js';
+import { renderArrayField, arrayFieldStyles } from './ArrayField.js';
 import { renderBooleanField } from './BooleanField.js';
-import { renderCompositionField } from './CompositionField.js';
-import { renderFileField } from './FileField.js';
-import { renderNullField } from './NullField.js';
+import { renderCompositionField, compositionFieldStyles } from './CompositionField.js';
+import { renderFileField, fileFieldStyles } from './FileField.js';
+import { renderNullField, nullFieldStyles } from './NullField.js';
 import { renderNumberField } from './NumberField.js';
-import { renderObjectField } from './ObjectField.js';
+import { renderObjectField, objectFieldStyles } from './ObjectField.js';
 import { renderSelectField } from './SelectField.js';
 import { renderStringField } from './StringField.js';
 import '@awesome.me/webawesome/dist/components/textarea/textarea.js';
+
+export {
+  arrayFieldStyles,
+  compositionFieldStyles,
+  fileFieldStyles,
+  nullFieldStyles,
+  objectFieldStyles,
+};
 
 import type { ValidationError } from '../utils/validator.js';
 

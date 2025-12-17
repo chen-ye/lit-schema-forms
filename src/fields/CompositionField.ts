@@ -1,4 +1,4 @@
-import { html, LitElement, type PropertyValues } from 'lit';
+import { css, html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { renderField } from './index.js';
 import '@awesome.me/webawesome/dist/components/select/select.js';
@@ -6,6 +6,26 @@ import type WaSelect from '@awesome.me/webawesome/dist/components/select/select.
 import '@awesome.me/webawesome/dist/components/option/option.js';
 import type { ChangeHandler, JSONSchema, UISchema, WidgetRegistry } from '../types.js';
 import type { ValidationError } from '../utils/validator.js';
+
+export const compositionFieldStyles = css`
+  .composition-field {
+    border: 1px dashed var(--wa-color-neutral-border-normal);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  .composition-header {
+    margin-bottom: 1rem;
+  }
+  .composition-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  .composition-select {
+    max-width: 300px;
+  }
+`;
 
 @customElement('lsf-composition-field')
 export class LsfCompositionField extends LitElement {
@@ -18,8 +38,6 @@ export class LsfCompositionField extends LitElement {
   @property({ attribute: false }) accessor onChange: ChangeHandler = () => {};
 
   @state() private accessor selectedIndex: number = 0;
-
-  // ... rest of class ...
 
   protected createRenderRoot() {
     return this; // Render in light DOM to inherit styles/form context
@@ -110,14 +128,14 @@ export class LsfCompositionField extends LitElement {
     const currentSchema = options[this.selectedIndex] || options[0];
 
     return html`
-      <div class="composition-field" style="border: 1px dashed #ccc; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
-        <div style="margin-bottom: 1rem;">
-          <label style="display:block; margin-bottom: 0.5rem; font-weight: bold;">${this.schema.title || 'Options'}</label>
+      <div class="composition-field">
+        <div class="composition-header">
+          <label class="composition-label">${this.schema.title || 'Options'}</label>
           <wa-select
               value=${String(this.selectedIndex)}
               @input=${(e: Event) => this.handleOptionChange(e)}
               size="small"
-              style="max-width: 300px;"
+              class="composition-select"
           >
             ${options.map(
               (opt: JSONSchema, i: number) => html`

@@ -34,8 +34,9 @@ var __runInitializers = (this && this.__runInitializers) || function (thisArg, i
 };
 import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { renderField } from './fields/index.js';
+import { renderField, arrayFieldStyles, compositionFieldStyles, fileFieldStyles, nullFieldStyles, objectFieldStyles, } from './fields/index.js';
 import { createValidator } from './utils/validator.js';
+import '@awesome.me/webawesome/dist/components/callout/callout.js';
 let JsonSchemaForm = (() => {
     let _classDecorators = [customElement('wa-json-schema-form')];
     let _classDescriptor;
@@ -75,20 +76,22 @@ let JsonSchemaForm = (() => {
             JsonSchemaForm = _classThis = _classDescriptor.value;
             if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         }
-        static styles = css `
-    :host {
-      display: block;
-      font-family: var(--wa-font-sans, sans-serif);
-    }
-    .error-list {
-      background-color: var(--wa-color-danger-50, #fef2f2);
-      border: 1px solid var(--wa-color-danger-200, #fecaca);
-      color: var(--wa-color-danger-700, #b91c1c);
-      padding: 1rem;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-    }
-  `;
+        static styles = [
+            css `
+      :host {
+        display: block;
+        font-family: var(--wa-font-sans, sans-serif);
+      }
+      wa-callout {
+        margin-bottom: 1rem;
+      }
+    `,
+            arrayFieldStyles,
+            compositionFieldStyles,
+            fileFieldStyles,
+            nullFieldStyles,
+            objectFieldStyles,
+        ];
         #schema_accessor_storage = __runInitializers(this, _schema_initializers, {});
         get schema() { return this.#schema_accessor_storage; }
         set schema(value) { this.#schema_accessor_storage = value; }
@@ -156,12 +159,12 @@ let JsonSchemaForm = (() => {
       <form @submit=${(e) => e.preventDefault()}>
         ${this.validationErrors.length > 0
                 ? html `
-          <div class="error-list">
-            <strong>Validation Errors:</strong>
+          <wa-callout variant="danger" icon="circle-exclamation">
+            <strong>Validation Errors</strong>
             <ul>
               ${this.validationErrors.map((e) => html `<li>${e.instanceLocation}: ${e.error}</li>`)}
             </ul>
-          </div>
+          </wa-callout>
         `
                 : ''}
         ${this.renderFields()}

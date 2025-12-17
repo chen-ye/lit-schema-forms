@@ -1,25 +1,35 @@
 import { css, html, LitElement, type PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { renderField } from './fields/index.js';
+import {
+  renderField,
+  arrayFieldStyles,
+  compositionFieldStyles,
+  fileFieldStyles,
+  nullFieldStyles,
+  objectFieldStyles,
+} from './fields/index.js';
 import type { JSONSchema, UISchema, WidgetRegistry } from './types.js';
 import { createValidator, type SchemaValidator, type ValidationError } from './utils/validator.js';
+import '@awesome.me/webawesome/dist/components/callout/callout.js';
 
 @customElement('wa-json-schema-form')
 export class JsonSchemaForm extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      font-family: var(--wa-font-sans, sans-serif);
-    }
-    .error-list {
-      background-color: var(--wa-color-danger-50, #fef2f2);
-      border: 1px solid var(--wa-color-danger-200, #fecaca);
-      color: var(--wa-color-danger-700, #b91c1c);
-      padding: 1rem;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-    }
-  `;
+  static styles = [
+    css`
+      :host {
+        display: block;
+        font-family: var(--wa-font-sans, sans-serif);
+      }
+      wa-callout {
+        margin-bottom: 1rem;
+      }
+    `,
+    arrayFieldStyles,
+    compositionFieldStyles,
+    fileFieldStyles,
+    nullFieldStyles,
+    objectFieldStyles,
+  ];
 
   @property({ type: Object }) accessor schema: JSONSchema = {};
   @property({ type: Object }) accessor view: UISchema = {};
@@ -96,12 +106,12 @@ export class JsonSchemaForm extends LitElement {
         ${
           this.validationErrors.length > 0
             ? html`
-          <div class="error-list">
-            <strong>Validation Errors:</strong>
+          <wa-callout variant="danger" icon="circle-exclamation">
+            <strong>Validation Errors</strong>
             <ul>
               ${this.validationErrors.map((e) => html`<li>${e.instanceLocation}: ${e.error}</li>`)}
             </ul>
-          </div>
+          </wa-callout>
         `
             : ''
         }

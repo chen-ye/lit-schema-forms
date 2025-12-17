@@ -1,5 +1,14 @@
-import { html } from 'lit';
+import { css, html } from 'lit';
 import { renderField } from './index.js';
+export const objectFieldStyles = css `
+  .object-properties {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--wa-color-neutral-border-normal);
+  }
+`;
 export function renderObjectField(key, schema, value, onChange, view = {}, path = '', errors = [], widgets = {}) {
     if (!schema.properties) {
         return html ``;
@@ -8,7 +17,7 @@ export function renderObjectField(key, schema, value, onChange, view = {}, path 
     return html `
     <div class="object-field">
       ${schema.title ? html `<h3>${schema.title}</h3>` : ''}
-      <div class="object-properties" style="display: flex; flex-direction: column; gap: 1rem; padding-left: 1rem; border-left: 2px solid #eee;">
+      <div class="object-properties">
         ${Object.keys(schema.properties).map((key) => {
         const propSchema = schema.properties[key];
         if (typeof propSchema === 'boolean') {
