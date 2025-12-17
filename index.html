@@ -58,7 +58,7 @@
     }
 
     wa-split-panel {
-      /* height: 100%; */
+      height: 100%;
       --divider-width: 2px;
       --divider-hit-area: 12px;
     }
@@ -77,12 +77,26 @@
     }
 
     /* Right: Sidebar Content Containers */
-    .pane-content {
-      /* height: 100%; */
+    /* New Static Grid/Flex Layout */
+    .sidebar-layout {
+      height: 100%;
       display: flex;
       flex-direction: column;
       background: var(--bg-color);
-      /* overflow: hidden; */
+      overflow: hidden;
+    }
+
+    .pane-content {
+      flex: 1; /* 1/3 height each */
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+      min-height: 0; /* Important for flex child scrolling */
+    }
+
+    .pane-content:last-child {
+      border-bottom: none;
     }
 
     .section-header {
@@ -172,29 +186,27 @@
         </div>
       </div>
 
-      <!-- End: Sidebar (Nested Splits) -->
-      <div slot="end">
-        <wa-split-panel orientation="vertical" position="50" primary="start">
+      <!-- End: Sidebar (Static Grid) -->
+      <div slot="end" class="sidebar-layout">
 
-          <wa-split-panel slot="start" position="50" orientation="vertical" primary="start">
+        <!-- Data -->
+        <div class="pane-content">
+          <div class="section-header">Data</div>
+          <pre id="output"></pre>
+        </div>
 
-              <div slot="start" class="pane-content">
-                <div class="section-header">Schema</div>
-                <pre id="schema-display"></pre>
-              </div>
-              <div slot="end" class="pane-content">
-                <div class="section-header">UI Schema</div>
-                <pre id="uischema-display"></pre>
-              </div>
+        <!-- Schema -->
+        <div class="pane-content">
+          <div class="section-header">Schema</div>
+          <pre id="schema-display"></pre>
+        </div>
 
-          </wa-split-panel>
+        <!-- UI Schema -->
+        <div class="pane-content">
+          <div class="section-header">UI Schema</div>
+          <pre id="uischema-display"></pre>
+        </div>
 
-          <div slot="end" class="pane-content">
-            <div class="section-header">Data</div>
-            <pre id="output"></pre>
-          </div>
-
-        </wa-split-panel>
       </div>
     </wa-split-panel>
   </main>
