@@ -1,12 +1,12 @@
 import { css, html, LitElement, type PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import {
-  renderField,
   arrayFieldStyles,
   compositionFieldStyles,
   fileFieldStyles,
   nullFieldStyles,
   objectFieldStyles,
+  renderField,
 } from './fields/index.js';
 import type { JSONSchema, UISchema, WidgetRegistry } from './types.js';
 import { createValidator, type SchemaValidator, type ValidationError } from './utils/validator.js';

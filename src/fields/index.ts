@@ -1,24 +1,18 @@
 import { html, type TemplateResult } from 'lit';
 import type { JSONSchema, KeyChangeHandler, UISchema, WidgetRegistry } from '../types.js';
 import { mergeSchemas } from '../utils/schema-utils.js';
-import { renderArrayField, arrayFieldStyles } from './ArrayField.js';
+import { arrayFieldStyles, renderArrayField } from './ArrayField.js';
 import { renderBooleanField } from './BooleanField.js';
-import { renderCompositionField, compositionFieldStyles } from './CompositionField.js';
-import { renderFileField, fileFieldStyles } from './FileField.js';
-import { renderNullField, nullFieldStyles } from './NullField.js';
+import { compositionFieldStyles, renderCompositionField } from './CompositionField.js';
+import { fileFieldStyles, renderFileField } from './FileField.js';
+import { nullFieldStyles, renderNullField } from './NullField.js';
 import { renderNumberField } from './NumberField.js';
-import { renderObjectField, objectFieldStyles } from './ObjectField.js';
+import { objectFieldStyles, renderObjectField } from './ObjectField.js';
 import { renderSelectField } from './SelectField.js';
 import { renderStringField } from './StringField.js';
 import '@awesome.me/webawesome/dist/components/textarea/textarea.js';
 
-export {
-  arrayFieldStyles,
-  compositionFieldStyles,
-  fileFieldStyles,
-  nullFieldStyles,
-  objectFieldStyles,
-};
+export { arrayFieldStyles, compositionFieldStyles, fileFieldStyles, nullFieldStyles, objectFieldStyles };
 
 import type { ValidationError } from '../utils/validator.js';
 
@@ -56,7 +50,16 @@ export function renderField(
 
   // Handle Composition (oneOf / anyOf)
   if (schema.oneOf || schema.anyOf) {
-    return renderCompositionField(key, schema, value, (val) => onChange(key, val), fieldView, currentPath, errors, widgets);
+    return renderCompositionField(
+      key,
+      schema,
+      value,
+      (val) => onChange(key, val),
+      fieldView,
+      currentPath,
+      errors,
+      widgets,
+    );
   }
 
   // Handle Enum -> Select

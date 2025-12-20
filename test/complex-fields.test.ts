@@ -50,7 +50,7 @@ describe('JsonSchemaForm Complex Fields', () => {
 
     // Click Add
     // biome-ignore lint/style/noNonNullAssertion: Test utility
-    const button = el.shadowRoot!.querySelector('wa-button')!;
+    const button = el.shadowRoot.querySelector('wa-button')!;
     expect(button.textContent?.trim()).to.equal('Add');
 
     // Setup listener BEFORE action to catch sync events
@@ -121,7 +121,7 @@ describe('JsonSchemaForm Complex Fields', () => {
     );
 
     // biome-ignore lint/style/noNonNullAssertion: Test utility
-    const input = el.shadowRoot!.querySelector('wa-input')!;
+    const input = el.shadowRoot.querySelector('wa-input')!;
 
     const listener = oneEvent(el, 'lsf-change');
     input.value = 'New';

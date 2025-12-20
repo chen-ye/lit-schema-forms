@@ -9,11 +9,12 @@
   "scripts": {
     "start": "web-dev-server --config web-dev-server.config.mjs --watch",
     "test": "web-test-runner",
-    "check": "biome check .",
+    "check": "biome check . --write",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "check:types": "tsc -p tsconfig.test.json",
-    "lint": "biome check --write ."
+    "lint": "biome check --write .",
+    "generate-import-map": "node scripts/generate-import-map.ts ./"
   },
   "dependencies": {
     "@awesome.me/webawesome": "^3.0.0",
@@ -23,11 +24,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.9",
+    "@jspm/generator": "^2.8.0",
     "@open-wc/testing": "^4.0.0",
     "@types/mocha": "^10.0.10",
     "@web/dev-server": "^0.4.6",
     "@web/dev-server-esbuild": "^1.0.4",
     "@web/test-runner": "^0.20.2",
+    "commander": "^14.0.2",
     "json-schema-typed": "^8.0.2",
     "typescript": "^5.9.3"
   }

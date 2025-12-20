@@ -1,6 +1,6 @@
 import { css, html } from 'lit';
 import '@awesome.me/webawesome/dist/components/input/input.js';
-export const fileFieldStyles = css `
+export const fileFieldStyles = css`
   .file-field {
     margin-bottom: 1rem;
   }
@@ -26,22 +26,22 @@ export const fileFieldStyles = css `
   }
 `;
 export function renderFileField(key, schema, value, onChange, view = {}, path = '', errors = []) {
-    const currentErrors = errors.filter((e) => e.instanceLocation === `#${path}`);
-    const errorMessage = currentErrors.length > 0 ? currentErrors.map((e) => e.error).join('; ') : undefined;
-    const handleFileChange = (e) => {
-        const input = e.target;
-        const file = input.files?.[0];
-        if (!file) {
-            onChange(undefined);
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            onChange(event.target?.result);
-        };
-        reader.readAsDataURL(file);
+  const currentErrors = errors.filter((e) => e.instanceLocation === `#${path}`);
+  const errorMessage = currentErrors.length > 0 ? currentErrors.map((e) => e.error).join('; ') : undefined;
+  const handleFileChange = (e) => {
+    const input = e.target;
+    const file = input.files?.[0];
+    if (!file) {
+      onChange(undefined);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      onChange(event.target?.result);
     };
-    return html `
+    reader.readAsDataURL(file);
+  };
+  return html`
     <div class="file-field">
       <label class="file-label">${schema.title || key}</label>
       <input
@@ -50,8 +50,8 @@ export function renderFileField(key, schema, value, onChange, view = {}, path = 
         accept=${view['ui:options']?.accept || ''}
         class="file-input"
       />
-      ${value ? html `<div class="file-current">Current: ${value.substring(0, 30)}...</div>` : ''}
-      ${errorMessage ? html `<div class="file-error">${errorMessage}</div>` : ''}
+      ${value ? html`<div class="file-current">Current: ${value.substring(0, 30)}...</div>` : ''}
+      ${errorMessage ? html`<div class="file-error">${errorMessage}</div>` : ''}
     </div>
   `;
 }

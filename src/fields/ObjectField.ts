@@ -36,9 +36,9 @@ export function renderObjectField(
         ${Object.keys(schema.properties).map((key) => {
           const propSchema = schema.properties![key];
           if (typeof propSchema === 'boolean') {
-             // Boolean schema in properties (true=allow, false=deny).
-             // For a form generator, we generally skip 'true' (no structure to render) or 'false' (hidden).
-             return html``;
+            // Boolean schema in properties (true=allow, false=deny).
+            // For a form generator, we generally skip 'true' (no structure to render) or 'false' (hidden).
+            return html``;
           }
           const propValue = currentValue[key];
 

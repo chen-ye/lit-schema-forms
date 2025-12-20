@@ -1,4 +1,4 @@
-import { html, fixture, expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import '../src/json-schema-form.js';
 import type { JsonSchemaForm } from '../src/json-schema-form.js';
 import type { JSONSchema, UISchema, WidgetRegistry } from '../src/types.js';

@@ -66,9 +66,9 @@ export class LsfCompositionField extends LitElement {
       // If type is not defined, we assume it *could* match, but exact matches take precedence
       if (opt.type && opt.type !== valType) {
         if (opt.type === 'integer' && valType === 'number') {
-           // allow
+          // allow
         } else {
-           return; // mismatch
+          return; // mismatch
         }
       }
 
@@ -76,7 +76,7 @@ export class LsfCompositionField extends LitElement {
       if (valType === 'object' && this.value && typeof this.value === 'object' && opt.properties) {
         const valueKeys = Object.keys(this.value as object);
         const schemaKeys = Object.keys(opt.properties);
-        const intersection = valueKeys.filter(k => schemaKeys.includes(k));
+        const intersection = valueKeys.filter((k) => schemaKeys.includes(k));
 
         if (intersection.length > maxPropsMatch) {
           maxPropsMatch = intersection.length;
@@ -91,9 +91,9 @@ export class LsfCompositionField extends LitElement {
     // Only override user selection if we found a matches
     if (bestMatch > -1) {
       if (valType !== 'object') {
-         this.selectedIndex = bestMatch;
+        this.selectedIndex = bestMatch;
       } else if (maxPropsMatch > 0) {
-         this.selectedIndex = bestMatch;
+        this.selectedIndex = bestMatch;
       }
     }
   }
